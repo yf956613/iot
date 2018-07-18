@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+
+    <record forcecreate="True" id="iot_sonoff_server"
+            model="ir.config_parameter">
+        <field name="key">iot.sonoff.server</field>
+        <field name="value">http://localhost/SonOff.php</field>
+    </record>
+</odoo>
