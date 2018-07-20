@@ -15,6 +15,10 @@
                         attrs="{'invisible': ['|', ('is_sonoff_server', '=', False), ('state', '=', 'sonoff-server-off')]}"
                         context="{'iot_system_action_id': %(iot_sonoff_server.iot_sonoff_server_action_off)d}"
                 />
+                <button name="device_run_action" type="object" string="Check"
+                        attrs="{'invisible': [('is_sonoff_server', '=', False)]}"
+                        context="{'iot_system_action_id': %(iot_sonoff_server.iot_sonoff_server_action_status)d}"
+                />
             </header>
             <field name="system_id" position="after">
                 <field name="is_sonoff_server" invisible="1"/>

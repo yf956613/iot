@@ -15,7 +15,8 @@ class IoTDevice(models.Model):
     @api.multi
     @api.depends('system_id')
     def _compute_is_sonoff_server(self):
-        sonoff = self.env.ref('iot_sonoff_server.iot_sonoff_server_system')
+        sonoff = self.env.ref('iot_sonoff_server.iot_sonoff_server_system',
+                              raise_if_not_found=False)
         for rec in self:
             rec.is_sonoff_server = (rec.system_id == sonoff)
 
