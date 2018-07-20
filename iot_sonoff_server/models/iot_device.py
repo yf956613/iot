@@ -28,7 +28,7 @@ class IoTDeviceAction(models.Model):
         sonoff_system = self.env.ref(
             'iot_sonoff_server.iot_sonoff_server_system'
         )
-        if status == 'ok' and self.system_id == sonoff_system:
+        if status == 'ok' and self.device_id.system_id == sonoff_system:
             json_result = json.loads(result)
             self.device_id.state = 'sonoff-server-%s' % json_result['status']
         return res

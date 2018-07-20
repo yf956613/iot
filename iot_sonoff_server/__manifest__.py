@@ -8,9 +8,10 @@
     'author': "Creu Blanca, "
               "Odoo Community Association (OCA)",
     'license': 'AGPL-3',
+    'website': 'https://github.com/OCA/iot',
     'installable': True,
     'application': False,
-    'summary': 'IoT base',
+    'summary': 'IoT Sonoff Server management',
     'depends': [
         'iot',
     ],

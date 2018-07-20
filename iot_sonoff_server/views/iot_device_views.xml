@@ -8,16 +8,16 @@
         <field name="arch" type="xml">
             <header position="inside">
                 <button name="device_run_action" type="object" string="On"
-                        attrs="{'invisible': ['|', ('is_sonoff_server', '!=', True), ('state', '=', 'sonoff-server-on')]}"
+                        attrs="{'invisible': ['|', ('is_sonoff_server', '=', False), ('state', '=', 'sonoff-server-on')]}"
                         context="{'iot_system_action_id': %(iot_sonoff_server.iot_sonoff_server_action_on)d}"
                 />
                 <button name="device_run_action" type="object" string="Off"
-                        attrs="{'invisible': ['|', ('is_sonoff_server', '!=', True), ('state', '=', 'sonoff-server-off')]}"
+                        attrs="{'invisible': ['|', ('is_sonoff_server', '=', False), ('state', '=', 'sonoff-server-off')]}"
                         context="{'iot_system_action_id': %(iot_sonoff_server.iot_sonoff_server_action_off)d}"
                 />
             </header>
             <field name="system_id" position="after">
-                <field name="is_sonoff_server" invisible="1"/>
+                <field name="is_sonoff_server" />
             </field>
         </field>
     </record>
