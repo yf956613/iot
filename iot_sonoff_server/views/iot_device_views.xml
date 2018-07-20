@@ -17,7 +17,7 @@
                 />
             </header>
             <field name="system_id" position="after">
-                <field name="is_sonoff_server" />
+                <field name="is_sonoff_server" invisible="1"/>
             </field>
         </field>
     </record>
