@@ -1,3 +1,4 @@
+import json
 from odoo import api, fields, models
 
 
@@ -24,14 +25,10 @@ class IoTDeviceAction(models.Model):
 
     def run_extra_actions(self, status, result):
         res = super().run_extra_actions(status, result)
-        sonoff_server_on = self.env.ref(
-            'iot_sonoff_server.iot_sonoff_server_action_on'
+        sonoff_system = self.env.ref(
+            'iot_sonoff_server.iot_sonoff_server_system'
         )
-        sonoff_server_off = self.env.ref(
-            'iot_sonoff_server.iot_sonoff_server_action_off'
-        )
-        if status == 'ok' and self.system_action_id == sonoff_server_on:
-            self.device_id.state = 'sonoff-server-on'
-        if status == 'ok' and self.system_action_id == sonoff_server_off:
-            self.device_id.state = 'sonoff-server-off'
+        if status == 'ok' and self.system_id == sonoff_system:
+            json_result = json.loads(result)
+            self.device_id.state = 'sonoff-server-%s' % json_result['status']
         return res
