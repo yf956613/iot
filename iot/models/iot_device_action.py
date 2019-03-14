@@ -9,7 +9,11 @@ class IoTDeviceAction(models.Model):
     _description = 'IoT Action'
     _order = 'date_ok desc'
 
-    device_id = fields.Many2one('iot.device', required=True, readonly=True)
+    output_id = fields.Many2one(
+        'iot.device.output',
+        required=True,
+        readonly=True
+    )
     system_action_id = fields.Many2one('iot.system.action', required=True)
     status = fields.Selection([
         ('ok', 'Ok'),
@@ -20,10 +24,10 @@ class IoTDeviceAction(models.Model):
     date_ok = fields.Datetime(readonly=True, string="Ok date")
 
     @api.multi
-    @api.constrains('device_id', 'system_action_id')
+    @api.constrains('output_id', 'system_action_id')
     def _check_system(self):
         if self.filtered(
-            lambda r: r.device_id.system_id != r.system_action_id.system_id
+            lambda r: r.output_id.system_id != r.system_action_id.system_id
         ):
             raise ValidationError(_(
                 'Device and action must be of the same system'))

@@ -8,29 +8,33 @@ class IoTDevice(models.Model):
     _description = 'IoT Device'
 
     name = fields.Char(required=True)
-    system_id = fields.Many2one('iot.system', required=True)
-    action_ids = fields.One2many(
-        'iot.device.action',
+    output_ids = fields.One2many(
+        'iot.device.output',
         inverse_name='device_id'
     )
-    state = fields.Selection([], readonly=True)
     model = fields.Char()
     ip = fields.Char()
-    action_count = fields.Integer(compute='_compute_action_count')
+    output_count = fields.Integer(compute='_compute_output_count')
 
     @api.multi
-    @api.depends('action_ids')
-    def _compute_action_count(self):
+    @api.depends('output_ids')
+    def _compute_output_count(self):
         for record in self:
-            record.action_count = len(record.action_ids)
+            record.output_count = len(record.output_ids)
 
     @api.multi
-    def device_run_action(self):
-        system_action = self.env['iot.system.action'].browse(
-            self.env.context.get('iot_system_action_id'))
-        for rec in self:
-            action = self.env['iot.device.action'].create({
-                'device_id': rec.id,
-                'system_action_id': system_action.id,
-            })
-            action.run()
+    def action_show_output(self):
+        self.ensure_one()
+        action = self.env.ref(
+            'iot.iot_device_output_action')
+        result = action.read()[0]
+
+        result['context'] = {
+            'default_device_id': self.id,
+        }
+        result['domain'] = "[('device_id', '=', " + \
+                           str(self.id) + ")]"
+        if len(self.output_ids) == 1:
+            result['views'] = [(False, 'form')]
+            result['res_id'] = self.output_ids.id
+        return result

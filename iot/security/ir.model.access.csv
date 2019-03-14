@@ -7,3 +7,5 @@ access_iot_system,access_iot_system,model_iot_system,group_iot_user,1,0,0,0
 manage_iot_system,access_iot_system,model_iot_system,group_iot_manager,1,1,1,1
 access_iot_system_action,access_iot_system_action,model_iot_system_action,group_iot_user,1,0,0,0
 manage_iot_system_action,access_iot_system_action,model_iot_system_action,group_iot_manager,1,1,1,1
+access_iot_device_output,access_iot_device_output,model_iot_device_output,group_iot_user,1,1,1,0
+manage_iot_device_output,access_iot_device_output,model_iot_device_output,group_iot_manager,1,1,1,1

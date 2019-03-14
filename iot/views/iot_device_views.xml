@@ -7,7 +7,6 @@
         <field name="arch" type="xml">
             <tree delete="0">
                 <field name="name"/>
-                <field name="system_id"/>
                 <field name="model"/>
                 <field name="ip"/>
             </tree>
@@ -21,6 +20,15 @@
             <form>
                 <header/>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_show_output"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-broadcast-tower">
+                            <field string="Outputs" name="output_count"
+                                   widget="statinfo"/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <h1>
                             <field name="name"/>
@@ -28,20 +36,10 @@
                     </div>
                     <group>
                         <group>
-                            <field name="system_id" attrs="{'readonly': [('action_count','>', 0)]}" widget="selection"/>
-                            <field name="action_count" invisible="1"/>
-                        </group>
-                        <group>
                             <field name="model"/>
                             <field name="ip"/>
-                            <field name="state"/>
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Actions" id="actions">
-                            <field name="action_ids" readonly="True"/>
-                        </page>
-                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -55,42 +53,11 @@
                 <field name="status"/>
                 <field name="result"/>
                 <field name="date_ok"/>
-                <button name="run" type="object" string="Run" attrs="{'invisible': [('status', '=', 'ok')]}"/>
+                <button name="run" type="object" string="Run"
+                        attrs="{'invisible': [('status', '=', 'ok')]}"/>
             </tree>
         </field>
     </record>
-
-    <record id="iot_device_kanban" model="ir.ui.view">
-        <field name="name">iot.device.kanban</field>
-        <field name="model">iot.device</field>
-        <field name="arch" type="xml">
-            <kanban create="false" class="o_kanban_dashboard">
-                <field name="name"/>
-                <field name="state"/>
-                <field name="system_id"/>
-                <templates>
-                    <t t-name="kanban-box">
-                        <div>
-                            <div class="o_kanban_card_header">
-                                <div class="o_kanban_card_header_title mb16">
-                                    <div class="o_primary">
-                                        <t t-esc="record.name.value"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="container o_kanban_card_content">
-                                <div class="row">
-                                    <div class="col-xs-6 o_kanban_primary_left" id="actions">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </t>
-                </templates>
-            </kanban>
-        </field>
-    </record>
-
 
     <record model="ir.actions.act_window" id="iot_device_config_action">
         <field name="name">IoT Devices</field>
@@ -100,7 +67,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-
     <record model="ir.actions.act_window" id="iot_device_action">
         <field name="name">IoT Devices</field>
         <field name="type">ir.actions.act_window</field>
@@ -109,13 +75,6 @@
         <field name="view_mode">kanban</field>
     </record>
 
-    <menuitem name="Devices"
-              sequence="10"
-              id="iot_device_menu"
-              action="iot_device_action"
-              parent="iot_root_menu"
-    />
-
     <menuitem name="Config Devices"
               sequence="80"
               id="iot_config_device_menu"
@@ -123,4 +82,5 @@
               parent="iot_root_menu"
               groups="group_iot_manager"
     />
+
 </odoo>

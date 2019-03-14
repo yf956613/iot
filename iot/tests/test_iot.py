@@ -24,26 +24,37 @@ class TestIoT(TransactionCase):
         })
         self.device = self.env['iot.device'].create({
             'name': 'Device',
+        })
+        self.assertEqual(self.device.output_count, 0)
+        self.output = self.env['iot.device.output'].create({
             'system_id': self.system.id,
+            'device_id': self.device.id,
+            'name': 'Output',
         })
 
+    def test_views(self):
+        self.assertEqual(self.device.output_count, 1)
+        res = self.device.action_show_output()
+        self.assertEqual(
+            self.output, self.env[res['res_model']].browse(res['res_id']))
+
     def test_action(self):
-        self.assertEqual(self.device.action_count, 0)
-        self.device.with_context(
+        self.assertEqual(self.output.action_count, 0)
+        self.output.with_context(
             iot_system_action_id=self.action.id).device_run_action()
-        self.assertEqual(self.device.action_count, 1)
-        self.assertEqual(self.device.action_ids.status, 'failed')
+        self.assertEqual(self.output.action_count, 1)
+        self.assertEqual(self.output.action_ids.status, 'failed')
 
     def test_correct_action(self):
-        self.assertEqual(self.device.action_count, 0)
+        self.assertEqual(self.output.action_count, 0)
         with patch('odoo.addons.iot.models.iot_system_action.'
                    'IoTSystemAction._run', return_value=('ok', '')):
-            self.device.with_context(
+            self.output.with_context(
                 iot_system_action_id=self.action.id).device_run_action()
-        self.assertEqual(self.device.action_count, 1)
-        self.assertEqual(self.device.action_ids.status, 'ok')
+        self.assertEqual(self.output.action_count, 1)
+        self.assertEqual(self.output.action_ids.status, 'ok')
 
     def test_constrains(self):
         with self.assertRaises(ValidationError):
-            self.device.with_context(
+            self.output.with_context(
                 iot_system_action_id=self.action_2.id).device_run_action()

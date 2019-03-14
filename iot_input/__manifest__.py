@@ -10,7 +10,7 @@
     'installable': True,
     'summary': 'IoT base module',
     'depends': [
-        'iot_base',
+        'iot',
         'mail',
     ],
     'data': [

@@ -22,8 +22,8 @@
                         <h1><field name="name"/></h1>
                     </div>
                     <notebook>
-                        <page string="Devices" id="devices">
-                            <field name="device_ids" readonly="True"/>
+                        <page string="Outputs" id="output">
+                            <field name="output_ids" readonly="True"/>
                         </page>
                         <page string="Actions" id="actions">
                             <field name="system_action_ids" readonly="True"/>
