@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sonoff_tasmota" model="iot.template">
+        <field name="name">Sonoff Tasmota Base</field>
+    </record>
+
+    <record id="sonoff_tasmota_name_key" model="iot.template.key">
+        <field name="template_id" ref="sonoff_tasmota"/>
+        <field name="key">name</field>
+    </record>
+
+    <record id="sonoff_tasmota_exchange_key" model="iot.template.key">
+        <field name="template_id" ref="sonoff_tasmota"/>
+        <field name="key">exchange</field>
+    </record>
+
+    <record id="sonoff_tasmota_power_on" model="iot.template.output">
+        <field name="template_id" ref="sonoff_tasmota"/>
+        <field name="name">power on</field>
+        <field name="system_id" ref="iot_input_amqp.amqp_system"/>
+        <field name="params">{'routing_key': 'cmnd.${name}.power', 'exchange': '${exchange}', 'body': 'on'}</field>
+    </record>
+
+    <record id="sonoff_tasmota_power_toggle" model="iot.template.output">
+        <field name="template_id" ref="sonoff_tasmota"/>
+        <field name="name">power toggle</field>
+        <field name="system_id" ref="iot_input_amqp.amqp_system"/>
+        <field name="params">{'routing_key': 'cmnd.${name}.power', 'exchange': '${exchange}', 'body': 'toggle'}</field>
+    </record>
+
+    <record id="sonoff_tasmota_power_off" model="iot.template.output">
+        <field name="template_id" ref="sonoff_tasmota"/>
+        <field name="name">power off</field>
+        <field name="system_id" ref="iot_input_amqp.amqp_system"/>
+        <field name="params">{'routing_key': 'cmnd.${name}.power', 'exchange': '${exchange}', 'body': 'off'}</field>
+    </record>
+
+    <record id="sonoff_tasmota_state" model="iot.template.input">
+        <field name="template_id" ref="sonoff_tasmota"/>
+        <field name="name">State</field>
+        <field name="call_function">test_input_device</field>
+        <field name="call_model_id" ref="iot_input.model_iot_device_input"/>
+        <field name="params">{'routing_key': 'tele.${name}.STATE'}</field>
+    </record>
+
+    <record id="sonoff_tasmota_sensor" model="iot.template">
+        <field name="name">Sonoff Tasmota Sensor</field>
+        <field name="parent_id" ref="sonoff_tasmota"/>
+    </record>
+
+    <record id="sonoff_tasmota_sensor_input" model="iot.template.input">
+        <field name="template_id" ref="sonoff_tasmota_sensor"/>
+        <field name="name">Sensor</field>
+        <field name="call_function">call_sensor</field>
+        <field name="params">{'routing_key': 'tele.${name}.SENSOR'}</field>
+    </record>
+</odoo>
