@@ -4,11 +4,10 @@ from odoo import fields, models
 
 
 class IoTSystem(models.Model):
-    _name = 'iot.system'
-    _description = 'IoT System'
+    _inherit = 'iot.system'
 
-    name = fields.Char(required=True)
     output_ids = fields.One2many('iot.device.output', inverse_name='system_id')
-    system_action_ids = fields.One2many(
-        'iot.system.action', inverse_name='system_id'
-    )
+    applies_to = fields.Selection([
+        ('device', 'Device'),
+        ('output', 'Output'),
+    ], default='device', required=True)

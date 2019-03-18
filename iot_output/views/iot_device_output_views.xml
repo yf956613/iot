@@ -27,7 +27,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="system_id"/>
+                            <field name="system_id" domain="[('applies_to', '=', 'output')]"/>
                         </group>
                     </group>
                 </sheet>
@@ -41,6 +41,22 @@
         <field name="res_model">iot.device.output</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <record id="iot_device_output_action_tree" model="ir.ui.view">
+        <field name="name">iot.device.output.action.tree</field>
+        <field name="model">iot.device.output.action</field>
+        <field name="arch" type="xml">
+            <tree create="0" delete="0">
+                <field name="status"/>
+                <field name="result"/>
+                <field name="date_ok"/>
+                <button name="run" type="object" string="Run"
+                        attrs="{'invisible': [('status', '=', 'ok')]}"/>
+            </tree>
+        </field>
     </record>
 
 </odoo>

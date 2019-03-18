@@ -4,8 +4,8 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
-class IoTDeviceAction(models.Model):
-    _name = 'iot.device.action'
+class IoTDeviceOutputAction(models.Model):
+    _name = 'iot.device.output.action'
     _description = 'IoT Action'
     _order = 'date_ok desc'
 

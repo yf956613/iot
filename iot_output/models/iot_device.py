@@ -4,16 +4,12 @@ from odoo import api, fields, models
 
 
 class IoTDevice(models.Model):
-    _name = 'iot.device'
-    _description = 'IoT Device'
+    _inherit = 'iot.device'
 
-    name = fields.Char(required=True)
     output_ids = fields.One2many(
         'iot.device.output',
         inverse_name='device_id'
     )
-    model = fields.Char()
-    ip = fields.Char()
     output_count = fields.Integer(compute='_compute_output_count')
 
     @api.multi
