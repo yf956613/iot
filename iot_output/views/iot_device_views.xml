@@ -16,8 +16,11 @@
                 </button>
             </xpath>
             <field name="system_id" position="attributes">
-                <attribute name="domain">[('applies_to', '=', 'device')]"</attribute>
+                <attribute name="domain">[('applies_to', '=', 'device')]</attribute>
             </field>
+            <page id="actions" position="attributes">
+                <attribute name="attrs">{'invisible': [('system_id', '=', False)]}</attribute>
+            </page>
         </field>
 
     </record>

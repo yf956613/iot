@@ -11,6 +11,7 @@ class IoTDevice(models.Model):
         inverse_name='device_id'
     )
     output_count = fields.Integer(compute='_compute_output_count')
+    system_id = fields.Many2one(required=False)
 
     @api.multi
     @api.depends('output_ids')
@@ -22,7 +23,7 @@ class IoTDevice(models.Model):
     def action_show_output(self):
         self.ensure_one()
         action = self.env.ref(
-            'iot.iot_device_output_action')
+            'iot_output.iot_device_output_action')
         result = action.read()[0]
 
         result['context'] = {
