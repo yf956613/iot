@@ -13,7 +13,7 @@
         'iot_output'
     ],
     'external_dependencies': {
-        'python': ['paho']
+        'python': ['pika']
     },
     'data': [
         'data/system_data.xml',

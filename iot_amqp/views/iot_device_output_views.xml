@@ -7,14 +7,15 @@
         <field name="inherit_id" ref="iot_output.iot_device_output_form"/>
         <field name="arch" type="xml">
             <field name="system_id" position="after">
-                <field name="mqtt_topic" attrs="{'invisible': [('system_id', '!=', %(iot_mqtt.mqtt_system)s)]}"/>
-                <field name="mqtt_payload" attrs="{'invisible': [('system_id', '!=', %(iot_mqtt.mqtt_system)s)]}"/>
+                <field name="amqp_exchange" attrs="{'invisible': [('system_id', '!=', %(iot_amqp.amqp_system)s)]}"/>
+                <field name="amqp_routing_key" attrs="{'invisible': [('system_id', '!=', %(iot_amqp.amqp_system)s)]}"/>
+                <field name="amqp_payload" attrs="{'invisible': [('system_id', '!=', %(iot_amqp.amqp_system)s)]}"/>
             </field>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="device_run_action" type="object"
-                        context="{'iot_system_action_id': %(iot_mqtt.mqtt_action)s}"
+                        context="{'iot_system_action_id': %(iot_amqp.amqp_action)s}"
                         icon="fa-cogs" string="Run"
-                         attrs="{'invisible': [('system_id', '!=', %(iot_mqtt.mqtt_system)s)]}"
+                         attrs="{'invisible': [('system_id', '!=', %(iot_amqp.amqp_system)s)]}"
                 />
             </xpath>
         </field>
